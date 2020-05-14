@@ -37,7 +37,7 @@ class Menu:
             'Watering: %s' % self.active,
             'Interval: %dm' % self.interval,
             'Duration: %ds' % self.duration,
-            'Drip now',
+            'Toggle pump',
         ]
 
         lcd.clear()
@@ -61,6 +61,7 @@ class Menu:
         if self.interval > 120:
             self.interval = 10
 
+        self.watering.set_interval(self.interval)
         self.print_menu()
 
     def toggleDuration(self):
@@ -68,6 +69,7 @@ class Menu:
         if self.duration > 60:
             self.duration = 5
 
+        self.watering.set_duration(self.duration)
         self.print_menu()
 
     def btnA(self):
@@ -82,9 +84,9 @@ class Menu:
         elif self.active_index == 2:
             self.toggleDuration()
         elif self.active_index == 3:
-            self.watering.start()
+            self.watering.toggle()
         
-        print('Selected %d' % self.active_index)
+        # print('Selected %d' % self.active_index)
             
 
     def btnB(self):
