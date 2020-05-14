@@ -15,7 +15,7 @@ lcd.orient(lcd.LANDSCAPE)
 # title0 = M5Title(title='Watering', x=4 , fgcolor=0xFFFFFF, bgcolor=0x0000FF)
 
 clock = Clock()
-menu = Menu()
+menu = Menu(clock)
 
 # if __name__ == '__main__':
 #     print(__name__)

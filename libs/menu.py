@@ -4,11 +4,12 @@ from m5stack import lcd
 from libs.watering import Watering
 
 class Menu:
-    def __init__(self):
+    def __init__(self, clock):
         self.active = False
         self.interval = 60 # min
         self.duration = 10 # sec
         self.active_index = None
+        self.clock = clock
         self.print_menu()
 
         self.watering = Watering(self.interval, self.duration)
@@ -17,12 +18,12 @@ class Menu:
         btnB.wasPressed(self.btnB)
 
     def print_cursor(self, i, active=True):
-        top_padding = 20
+        top_padding = 22
         font_size = lcd.fontSize()
 
         x1, y1 = 5, top_padding + font_size[0] * i
-        x2, y2 = 13, top_padding + font_size[0] * i + 4
-        x3, y3 = 5, top_padding + font_size[0] * i + 8
+        x2, y2 = 11, top_padding + font_size[0] * i + 3
+        x3, y3 = 5, top_padding + font_size[0] * i + 6
 
         color = lcd.WHITE if active else lcd.BLACK
         lcd.triangle(x1, y1, x2, y2, x3, y3, color, color)
@@ -40,8 +41,8 @@ class Menu:
             'Toggle pump',
         ]
 
-        lcd.clear()
-        # lcd.rect(0, top_padding, size[0], size[1], lcd.BACK, lcd.BLACK)
+        # lcd.clear()
+        # self.clock.show()
 
         for i in range(len(self.menu_items)):
             item = self.menu_items[i]
@@ -49,7 +50,7 @@ class Menu:
                 self.print_cursor(i)
                 lcd.print(item, left_padding, top_padding + font_size[0] * i)
             else:
-                # self.print_cursor(i, False)
+                self.print_cursor(i, False)
                 lcd.print(item, left_padding, top_padding + font_size[0] * i)
 
     def toggleActive(self):
