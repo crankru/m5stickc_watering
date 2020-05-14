@@ -1,6 +1,8 @@
 from m5stack import *
 from m5stack import lcd
 
+from libs.watering import Watering
+
 class Menu:
     def __init__(self):
         self.active = False
@@ -8,6 +10,8 @@ class Menu:
         self.duration = 10 # sec
         self.active_index = None
         self.print_menu()
+
+        self.watering = Watering(self.interval, self.duration)
 
         btnA.wasPressed(self.btnA)
         btnB.wasPressed(self.btnB)
@@ -26,15 +30,18 @@ class Menu:
     def print_menu(self):
         top_padding = 20
         left_padding = 15
+        size = lcd.screensize()
         font_size = lcd.fontSize()
 
         self.menu_items = [
             'Watering: %s' % self.active,
             'Interval: %dm' % self.interval,
             'Duration: %ds' % self.duration,
+            'Drip now',
         ]
 
         lcd.clear()
+        # lcd.rect(0, top_padding, size[0], size[1], lcd.BACK, lcd.BLACK)
 
         for i in range(len(self.menu_items)):
             item = self.menu_items[i]
@@ -74,6 +81,8 @@ class Menu:
             self.toggleInterval()
         elif self.active_index == 2:
             self.toggleDuration()
+        elif self.active_index == 3:
+            self.watering.start()
         
         print('Selected %d' % self.active_index)
             
@@ -86,5 +95,5 @@ class Menu:
             if self.active_index >= len(self.menu_items):
                 self.active_index = 0
 
-        print(self.active_index)
+        # print(self.active_index)
         self.print_menu()
