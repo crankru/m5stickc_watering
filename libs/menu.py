@@ -42,6 +42,8 @@ class Menu:
         ]
 
         # lcd.clear()
+        # lcd.lcd.rect(0, 20, size[0], 20, lcd.BLACK, lcd.BLACK)
+        lcd.rect(0, top_padding, size[0], size[1] - top_padding, lcd.BLACK, lcd.BLACK)
         # self.clock.show()
 
         for i in range(len(self.menu_items)):
@@ -50,7 +52,7 @@ class Menu:
                 self.print_cursor(i)
                 lcd.print(item, left_padding, top_padding + font_size[0] * i)
             else:
-                self.print_cursor(i, False)
+                # self.print_cursor(i, False)
                 lcd.print(item, left_padding, top_padding + font_size[0] * i)
 
     def toggleActive(self):
